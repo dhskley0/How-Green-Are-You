@@ -1,57 +1,36 @@
-# 🌿 How Green Are You? — by Project Zero Plastic
+🌱 How Green Are You?
 
-Welcome to the **"How Green Are You?"** interactive quiz! 💚  
-This fun and educational quiz helps raise awareness about eco-friendly habits and plastic reduction, brought to you by **Project Zero Plastic**.
+"How Green Are You?" is an interactive quiz created for the Project Zero Plastic campaign. It encourages everyone to reflect on their daily habits and discover how eco-friendly they really are!
 
----
+💡 About the Project
 
-## 🌎 About the Project
-**Project Zero Plastic** is an advocacy campaign that promotes reducing plastic waste and building a sustainable lifestyle.  
-Through this quiz, we encourage everyone to reflect on their daily habits and learn how to live *greener and cleaner*.
+This project aims to raise awareness about the harmful effects of plastic pollution and inspire people to make small but impactful changes. It’s not about being perfect—it’s about making progress toward a cleaner, greener planet. 🌍
 
----
+After answering fun and simple questions, users receive a personalized result showing their eco-level — from “You’re a Zero!” to “Eco Warrior!” Each result includes a message encouraging everyone to join the movement and take part in Project Zero Plastic.
 
-## 💡 Features
-- ✅ 5 fun eco-themed questions  
-- ✅ Personalized results (🌱 *Budding Eco Explorer*, 🌿 *Green Guardian*, 🌎 *Planet Protector*)  
-- ✅ Auto-score calculation  
-- ✅ Saves names and results to Google Sheets  
-- ✅ Mobile-friendly mint-green design  
+🌿 Why It Matters
 
----
+Plastic waste affects:
 
-## 🚀 How It Works
-1. Enter your **name** and answer all 5 questions.  
-2. Click **“See My Result”**.  
-3. Your result will appear instantly — and your score will be recorded in our database.  
-4. Share your results and inspire others to join the movement! 💚  
+🐠 Marine life — animals mistake plastic for food
 
----
+🌊 Oceans — polluted waters harm ecosystems
 
-## 🧠 Tech Stack
-- HTML5  
-- Tailwind CSS  
-- JavaScript (Fetch API)  
-- Google Apps Script (for saving responses)  
+🌎 People — microplastics enter our food and water
 
----
+By reducing single-use plastics, recycling properly, and spreading awareness, we can all protect our planet together.
 
-## 🛠️ Setup Instructions
-1. Clone or download this repository.  
-2. Open `index.html` in your browser to test locally.  
-3. Deploy via **GitHub Pages**:
-   - Go to **Settings → Pages**
-   - Select **Main Branch / Root**
-   - Click **Save**
-4. Wait a minute, then visit:
+🚀 Features
 
+🎯 Interactive quiz with instant results
 
----
+💚 Engaging and eco-themed design
 
-## 💚 Credits
-Developed by **Project Zero Plastic Team**  
-Advocating for a cleaner, plastic-free future 🌍  
+📱 Mobile-friendly and easy to share
 
----
+🌍 Promotes environmental awareness
 
-### ✨ “It doesn’t take a superhero to save the planet — it takes all of us.” ✨
+🤝 Join the Movement
+
+Take the quiz and share your results to inspire others!
+Together, we can build a future with Zero Plastic and 100% care for our planet. — it takes all of us.” ✨
