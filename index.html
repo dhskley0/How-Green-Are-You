@@ -54,31 +54,11 @@
 
   <script>
     const quizData = [
-      {
-        question: "How often do you use reusable bags?",
-        options: ["Never", "Sometimes", "Always"],
-        scores: [0, 1, 2]
-      },
-      {
-        question: "What should you do with single-use plastic bottles?",
-        options: ["Throw them away", "Recycle them", "Burn them"],
-        scores: [0, 2, 0]
-      },
-      {
-        question: "Which of these items can be recycled?",
-        options: ["Plastic bottles", "Food waste", "Styrofoam"],
-        scores: [2, 0, 0]
-      },
-      {
-        question: "How do you dispose of plastic waste at home?",
-        options: ["Mix it with other trash", "Segregate properly", "Leave it anywhere"],
-        scores: [0, 2, 0]
-      },
-      {
-        question: "What’s one simple way to reduce plastic pollution?",
-        options: ["Use reusable items", "Ignore the issue", "Buy more plastic"],
-        scores: [2, 0, 0]
-      }
+      { question: "How often do you use reusable bags?", options: ["Never", "Sometimes", "Always"], scores: [0, 1, 2] },
+      { question: "What should you do with single-use plastic bottles?", options: ["Throw them away", "Recycle them", "Burn them"], scores: [0, 2, 0] },
+      { question: "Which of these items can be recycled?", options: ["Plastic bottles", "Food waste", "Styrofoam"], scores: [2, 0, 0] },
+      { question: "How do you dispose of plastic waste at home?", options: ["Mix it with other trash", "Segregate properly", "Leave it anywhere"], scores: [0, 2, 0] },
+      { question: "What’s one simple way to reduce plastic pollution?", options: ["Use reusable items", "Ignore the issue", "Buy more plastic"], scores: [2, 0, 0] }
     ];
 
     let currentQuestion = 0;
@@ -111,11 +91,8 @@
     function selectAnswer(index) {
       score += quizData[currentQuestion].scores[index];
       currentQuestion++;
-      if (currentQuestion < quizData.length) {
-        loadQuestion();
-      } else {
-        showResult();
-      }
+      if (currentQuestion < quizData.length) loadQuestion();
+      else showResult();
     }
 
     function showResult() {
@@ -143,22 +120,22 @@
 
     function submitResult() {
       const name = document.getElementById("name").value.trim();
-      if (!name) {
-        alert("Please enter your name first!");
-        return;
-      }
+      if (!name) { alert("Please enter your name first!"); return; }
 
-      fetch("https://script.google.com/macros/s/AKfycbyoR2LuSMewk8xcbcwu4UJ1xh-sGlZwRvqyWAcBTTnirnOJbbXsA0ZLNZKe691ooLCGiw/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbz1KPkMNRftabq6QkyB3Vg1I4DilniOliU3JUBUrr2O246FAPzD8wgixPyyHjGMev3OMA/exec", {
         method: "POST",
-        body: new URLSearchParams({ name, score }),
-      });
-
-      document.getElementById("join-section").classList.remove("hidden");
+        body: new URLSearchParams({ name: name, score: score }),
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert("Your result has been submitted successfully! 🎉");
+        document.getElementById("join-section").classList.remove("hidden");
+      })
+      .catch(err => alert("Oops! Something went wrong. 😢"));
     }
 
     function restartQuiz() {
-      currentQuestion = 0;
-      score = 0;
+      currentQuestion = 0; score = 0;
       document.getElementById("result-screen").classList.add("hidden");
       document.getElementById("join-section").classList.add("hidden");
       document.getElementById("start-screen").classList.remove("hidden");
@@ -172,4 +149,3 @@
 
 </body>
 </html>
-
