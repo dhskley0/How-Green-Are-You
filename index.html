@@ -33,21 +33,12 @@
       <input id="name" type="text" placeholder="Enter your name" class="border border-gray-300 rounded-md p-2 w-full mb-4" />
       <button onclick="submitResult()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full">Submit</button>
 
-      <div id="join-section" class="hidden mt-8 text-left border-t pt-6 border-gray-300">
-        <h3 class="text-xl font-bold text-green-700 mb-2">🌎 Join Project Zero Plastic</h3>
-        <p class="text-gray-600 mb-4">
-          Every small action matters — bringing your own bottle, refusing single-use plastic, and supporting eco-projects all make a difference. 🌱
-          <br><br>
-          Plastic pollution harms our oceans, floods our cities, and endangers wildlife. But together, we can change that. By reducing plastic waste, we protect our planet, our health, and future generations. 💚
-          <br><br>
-          Be part of the movement. Let’s make <em>zero plastic waste</em> possible — one choice at a time.
-        </p>
+      <div id="join-section" class="hidden mt-8 text-left border-t pt-6 border-gray-300"></div>
 
-        <div class="flex flex-col gap-3">
-          <a href="https://www.facebook.com/profile.php?id=61582675312113" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full text-center">Learn More About Project Zero Plastic</a>
-          <button onclick="restartQuiz()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full">Try Again</button>
-          <button onclick="shareOnFacebook()" class="bg-[#1877f2] hover:bg-blue-800 text-white py-2 px-4 rounded-full">Share on Facebook</button>
-        </div>
+      <div class="flex flex-col gap-3 mt-4">
+        <a href="https://www.facebook.com/profile.php?id=61582675312113" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full text-center">Learn More About Project Zero Plastic</a>
+        <button onclick="restartQuiz()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full">Try Again</button>
+        <button onclick="shareOnFacebook()" class="bg-[#1877f2] hover:bg-blue-800 text-white py-2 px-4 rounded-full">Share on Facebook</button>
       </div>
     </div>
   </div>
@@ -63,6 +54,7 @@
 
     let currentQuestion = 0;
     let score = 0;
+    const leaderboard = []; // local leaderboard
 
     function startQuiz() {
       document.getElementById("start-screen").classList.add("hidden");
@@ -104,10 +96,10 @@
 
       if (score <= 3) {
         title = "🌿 Budding Eco Explorer";
-        message = "You’re just getting started! Every small change helps — keep learning and make greener choices.";
+        message = "You’re just getting started! Keep learning and make greener choices.";
       } else if (score <= 7) {
         title = "🌱 Green Guardian";
-        message = "You’re doing great! Keep promoting eco-friendly habits and inspire others to do the same.";
+        message = "You’re doing great! Keep promoting eco-friendly habits.";
       } else {
         title = "🌎 Planet Protector";
         message = "Amazing! You're a Zero — leading the way for a cleaner, greener Earth!";
@@ -122,16 +114,19 @@
       const name = document.getElementById("name").value.trim();
       if (!name) { alert("Please enter your name first!"); return; }
 
-      fetch("https://script.google.com/macros/s/AKfycbz1KPkMNRftabq6QkyB3Vg1I4DilniOliU3JUBUrr2O246FAPzD8wgixPyyHjGMev3OMA/exec", {
-        method: "POST",
-        body: new URLSearchParams({ name: name, score: score }),
-      })
-      .then(response => response.text())
-      .then(data => {
-        alert("Your result has been submitted successfully! 🎉");
-        document.getElementById("join-section").classList.remove("hidden");
-      })
-      .catch(err => alert("Oops! Something went wrong. 😢"));
+      // Add to leaderboard
+      leaderboard.push({ name, score });
+      leaderboard.sort((a, b) => b.score - a.score); // highest first
+
+      // Build leaderboard HTML
+      let rankingHTML = "<h3 class='text-lg font-bold mb-2 text-green-700'>🏆 Leaderboard</h3><ol class='text-left'>";
+      leaderboard.forEach(player => {
+        rankingHTML += `<li>${player.name}: ${player.score} points</li>`;
+      });
+      rankingHTML += "</ol>";
+
+      document.getElementById("join-section").innerHTML = rankingHTML;
+      document.getElementById("join-section").classList.remove("hidden");
     }
 
     function restartQuiz() {
