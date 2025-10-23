@@ -4,194 +4,171 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How Green Are You? — Project Zero Plastic</title>
-  <link rel="icon" href="logo.png" type="image/png" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      background: linear-gradient(135deg, #a8e6cf, #dcedc1);
-      font-family: "Poppins", sans-serif;
-      color: #064420;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-      color: #064420;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    h2 {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      color: #2f5d62;
-      text-align: center;
-      font-weight: 500;
-    }
-
-    form {
-      background-color: #ffffffcc;
-      padding: 2rem;
-      border-radius: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-      animation: slideUp 0.8s ease;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 0.6rem;
-      border-radius: 0.5rem;
-      border: 2px solid #a8e6cf;
-      margin-bottom: 1.5rem;
-      outline: none;
-      transition: border 0.3s;
-    }
-
-    input[type="text"]:focus {
-      border-color: #2f5d62;
-    }
-
-    .question {
-      margin-bottom: 1.5rem;
-    }
-
-    button {
-      background-color: #2f5d62;
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 1rem;
-      border: none;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.2s;
-      font-weight: 600;
-    }
-
-    button:hover {
-      background-color: #064420;
-      transform: scale(1.05);
-    }
-
-    .result {
-      display: none;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-  </style>
 </head>
-<body>
-  <h1>How Green Are You?</h1>
-  <h2>by Project Zero Plastic 💚</h2>
+<body class="bg-[#aaf0d1] text-gray-800 font-sans flex items-center justify-center min-h-screen">
 
-  <form id="quizForm">
-    <label for="name">Your Name:</label>
-    <input type="text" id="name" name="name" placeholder="Type your name..." required />
+  <div id="quiz-container" class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-lg text-center">
+    <h1 class="text-3xl font-bold mb-4 text-green-700">How Green Are You?</h1>
+    <p class="mb-6 text-gray-600">Let’s see how eco-friendly you are! Take this fun quiz and find out how green your habits really are.</p>
 
-    <div class="question">
-      <label>1️⃣ How often do you bring your own reusable bag when shopping?</label><br>
-      <input type="radio" name="q1" value="3" required> Always ♻️<br>
-      <input type="radio" name="q1" value="2"> Sometimes 🛍️<br>
-      <input type="radio" name="q1" value="1"> Never 😅
+    <div id="start-screen">
+      <button onclick="startQuiz()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full">
+        Start Quiz
+      </button>
     </div>
 
-    <div class="question">
-      <label>2️⃣ What do you do with plastic bottles after using them?</label><br>
-      <input type="radio" name="q2" value="3" required> Recycle them ♻️<br>
-      <input type="radio" name="q2" value="2"> Reuse for crafts 🌸<br>
-      <input type="radio" name="q2" value="1"> Throw them away 🗑️
+    <div id="quiz-screen" class="hidden">
+      <h2 id="question" class="text-xl font-semibold mb-4"></h2>
+      <div id="options" class="flex flex-col gap-3 mb-4"></div>
+      <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+        <div id="progress" class="bg-green-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%;"></div>
+      </div>
     </div>
 
-    <div class="question">
-      <label>3️⃣ How do you usually travel to short destinations?</label><br>
-      <input type="radio" name="q3" value="3" required> Walk or bike 🚴‍♀️<br>
-      <input type="radio" name="q3" value="2"> Public transport 🚌<br>
-      <input type="radio" name="q3" value="1"> Private vehicle 🚗
-    </div>
+    <div id="result-screen" class="hidden">
+      <h2 id="result-title" class="text-2xl font-bold mb-2 text-green-700"></h2>
+      <p id="result-message" class="mb-6 text-gray-600"></p>
 
-    <div class="question">
-      <label>4️⃣ How do you save energy at home?</label><br>
-      <input type="radio" name="q4" value="3" required> Turn off lights/appliances ⚡<br>
-      <input type="radio" name="q4" value="2"> Sometimes forget 😬<br>
-      <input type="radio" name="q4" value="1"> Never thought about it 🤔
-    </div>
+      <input id="name" type="text" placeholder="Enter your name" class="border border-gray-300 rounded-md p-2 w-full mb-4" />
+      <button onclick="submitResult()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full">Submit</button>
 
-    <div class="question">
-      <label>5️⃣ How often do you talk about environmental issues with friends or family?</label><br>
-      <input type="radio" name="q5" value="3" required> Always 🌍<br>
-      <input type="radio" name="q5" value="2"> Sometimes 💬<br>
-      <input type="radio" name="q5" value="1"> Rarely 😶
-    </div>
+      <div id="join-section" class="hidden mt-8 text-left border-t pt-6 border-gray-300">
+        <h3 class="text-xl font-bold text-green-700 mb-2">🌎 Join Project Zero Plastic</h3>
+        <p class="text-gray-600 mb-4">
+          Every small action matters — bringing your own bottle, refusing single-use plastic, and supporting eco-projects all make a difference. 🌱
+          <br><br>
+          Plastic pollution harms our oceans, floods our cities, and endangers wildlife. But together, we can change that. By reducing plastic waste, we protect our planet, our health, and future generations. 💚
+          <br><br>
+          Be part of the movement. Let’s make <em>zero plastic waste</em> possible — one choice at a time.
+        </p>
 
-    <div class="flex justify-center">
-      <button type="submit">See My Result 🌿</button>
+        <div class="flex flex-col gap-3">
+          <a href="https://www.facebook.com/share/p/1A1f956NAB/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full text-center">Learn More About Project Zero Plastic</a>
+          <button onclick="restartQuiz()" class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-full">Try Again</button>
+          <button onclick="shareOnFacebook()" class="bg-[#1877f2] hover:bg-blue-800 text-white py-2 px-4 rounded-full">Share on Facebook</button>
+        </div>
+      </div>
     </div>
-  </form>
-
-  <div id="result" class="result"></div>
+  </div>
 
   <script>
-    const form = document.getElementById("quizForm");
-    const resultDiv = document.getElementById("result");
+    const quizData = [
+      {
+        question: "How often do you use reusable bags?",
+        options: ["Never", "Sometimes", "Always"],
+        scores: [0, 1, 2]
+      },
+      {
+        question: "What should you do with single-use plastic bottles?",
+        options: ["Throw them away", "Recycle them", "Burn them"],
+        scores: [0, 2, 0]
+      },
+      {
+        question: "Which of these items can be recycled?",
+        options: ["Plastic bottles", "Food waste", "Styrofoam"],
+        scores: [2, 0, 0]
+      },
+      {
+        question: "How do you dispose of plastic waste at home?",
+        options: ["Mix it with other trash", "Segregate properly", "Leave it anywhere"],
+        scores: [0, 2, 0]
+      },
+      {
+        question: "What’s one simple way to reduce plastic pollution?",
+        options: ["Use reusable items", "Ignore the issue", "Buy more plastic"],
+        scores: [2, 0, 0]
+      }
+    ];
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+    let currentQuestion = 0;
+    let score = 0;
 
-      const name = document.getElementById("name").value.trim();
-      if (!name) return alert("Please enter your name!");
+    function startQuiz() {
+      document.getElementById("start-screen").classList.add("hidden");
+      document.getElementById("quiz-screen").classList.remove("hidden");
+      loadQuestion();
+    }
 
-      let score = 0;
-      for (let i = 1; i <= 5; i++) {
-        const q = document.querySelector(`input[name="q${i}"]:checked`);
-        if (q) score += parseInt(q.value);
+    function loadQuestion() {
+      const questionData = quizData[currentQuestion];
+      document.getElementById("question").textContent = questionData.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      questionData.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.className = "bg-green-100 hover:bg-green-200 py-2 px-4 rounded-full";
+        button.onclick = () => selectAnswer(index);
+        optionsDiv.appendChild(button);
+      });
+
+      document.getElementById("progress").style.width = `${(currentQuestion / quizData.length) * 100}%`;
+    }
+
+    function selectAnswer(index) {
+      score += quizData[currentQuestion].scores[index];
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      document.getElementById("quiz-screen").classList.add("hidden");
+      document.getElementById("result-screen").classList.remove("hidden");
+
+      let title = "";
+      let message = "";
+
+      if (score <= 3) {
+        title = "🌿 Budding Eco Explorer";
+        message = "You’re just getting started! Every small change helps — keep learning and make greener choices.";
+      } else if (score <= 7) {
+        title = "🌱 Green Guardian";
+        message = "You’re doing great! Keep promoting eco-friendly habits and inspire others to do the same.";
+      } else {
+        title = "🌎 Planet Protector";
+        message = "Amazing! You're a Zero — leading the way for a cleaner, greener Earth!";
       }
 
-      const percentage = (score / 15) * 100;
-      let category = "";
+      document.getElementById("result-title").textContent = title;
+      document.getElementById("result-message").textContent = message;
+      document.getElementById("progress").style.width = "100%";
+    }
 
-      if (percentage >= 71) category = "🌎 Planet Protector";
-      else if (percentage >= 41) category = "🌿 Green Guardian";
-      else category = "🌱 Budding Eco Explorer";
+    function submitResult() {
+      const name = document.getElementById("name").value.trim();
+      if (!name) {
+        alert("Please enter your name first!");
+        return;
+      }
 
-      resultDiv.innerHTML = `
-        <h2 class="text-2xl font-bold mb-2">Hi, ${name}! 💚</h2>
-        <p class="text-lg">You are a <strong>${category}</strong>!</p>
-        <p>Your score: ${percentage.toFixed(0)}%</p>
-        <button onclick="window.location.reload()" class="mt-4 bg-[#2f5d62] text-white px-4 py-2 rounded-lg">Try Again</button>
-      `;
-
-      form.style.display = "none";
-      resultDiv.style.display = "block";
-
-      // Send data to Google Sheet
-      await fetch("https://script.google.com/macros/s/AKfycbyoR2LuSMewk8xcbcwu4UJ1xh-sGlZwRvqyWAcBTTnirnOJbbXsA0ZLNZKe691ooLCGiw/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbyoR2LuSMewk8xcbcwu4UJ1xh-sGlZwRvqyWAcBTTnirnOJbbXsA0ZLNZKe691ooLCGiw/exec", {
         method: "POST",
-        body: new FormData(form),
+        body: new URLSearchParams({ name, score }),
       });
-    });
+
+      document.getElementById("join-section").classList.remove("hidden");
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      document.getElementById("result-screen").classList.add("hidden");
+      document.getElementById("join-section").classList.add("hidden");
+      document.getElementById("start-screen").classList.remove("hidden");
+    }
+
+    function shareOnFacebook() {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
+    }
   </script>
+
 </body>
 </html>
